@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import IdeaList from "./IdeaList";
 import img1 from "../../public/undraw_launch-event_aur1.svg";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
   const ideaListRef = useRef(null);
@@ -31,12 +32,12 @@ export default function Hero() {
               >
                 Fikirleri Keşfet
               </button>
-              <button
+              <Link
                 className="px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold shadow-md transition-all duration-200 text-lg"
-                onClick={() => (window.location.href = "/contact")}
+                to="/contact"
               >
                 Fikrim Var
-              </button>
+              </Link>
             </div>
           </div>
           <div className="md:w-1/2 w-full mb-10 md:mb-0 flex justify-center">
