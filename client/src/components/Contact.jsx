@@ -4,6 +4,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
+  const [result, setResult] = React.useState("");
 
   function validate() {
     const errs = {};
@@ -20,17 +21,28 @@ export default function Contact() {
     setErrors({ ...errors, [e.target.name]: undefined });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
-      setSuccess(false);
-      return;
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", "013bcfce-ce02-42d8-9286-1dbe9afc4b35");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setResult("Form Submitted Successfully");
+      event.target.reset();
+    } else {
+      console.log("Error", data);
+      setResult(data.message);
     }
-    setSuccess(true);
-    setForm({ name: "", email: "", message: "" });
-  }
+  };
 
   return (
     <section className="max-w-lg mx-auto my-12 bg-white rounded-xl shadow p-6 md:p-10">
@@ -40,7 +52,7 @@ export default function Contact() {
           Mesajınız başarıyla gönderildi!
         </div>
       )}
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={onSubmit} noValidate>
         <div className="mb-4">
           <label
             htmlFor="name"
