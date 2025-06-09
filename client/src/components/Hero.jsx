@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import IdeaList from "./IdeaList";
-import img1 from "../../public/undraw_launch-event_aur1.svg";
+import img1 from "/undraw_launch-event_aur1.svg";
 import { Link } from "react-router-dom";
 
 export default function Hero() {
